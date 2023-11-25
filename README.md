@@ -41,7 +41,7 @@ application directly.
 
 - Expected output: Yaml files and instruction how to deploy the application or command line
 
-- Output: Please see "06-argocd" folder
+- Output: Please see "06-argocd" folder and "deploy-cmd.sh" for deploy command
 
 
 7. (Bonus point) Create CICD workflow using Github Actions to build and deploy application
