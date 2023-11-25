@@ -1,0 +1,36 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: |
+        cd 01-02-app-no-ops
+        docker build -t songkornd/golang-app:demo .
+        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        docker push songkornd/golang-app:demo
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install kubectl
+      run: |
+        sudo apt-get update && sudo apt-get install -y kubectl
+
+    - name: Deploy to ArgoCD
+      run: |
+        kubectl apply -f 06-argocd/argocd-app.yaml

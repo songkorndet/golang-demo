@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app01-golangdemo-deployment
+  labels:
+    app: app01-golangdemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-node01
+  template:
+    metadata:
+      labels:
+        app: app01-golangdemo
+    spec:
+      containers:
+      - name: app01-golangdemo
+        image: songkornd/golang-app:demo
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app01-golangdemo-service
+spec:
+  selector:
+    app: app-node01
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

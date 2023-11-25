@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app01-golangdemo
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: app01-golangdemo
+  project: default
+  source:
+    repoURL: 'https://github.com/songkorndet/golang-demo.git' 
+    path: '06-argocd'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
